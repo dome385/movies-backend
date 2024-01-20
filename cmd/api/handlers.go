@@ -1,17 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 )
 
-func (app *application) Home(w http.ResponseWriter, r *http.Request){
+func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 	var payload = struct {
-		Status string `json:"status"`
+		Status  string `json:"status"`
 		Message string `json:"message"`
 		Version string `json:"version"`
 	}{
-		Status: "active",
+		Status:  "active",
 		Message: "Go Filme läuft",
 		Version: "1.0.0",
 	}
@@ -19,10 +18,10 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request){
 	_ = app.writeJSON(w, http.StatusOK, payload)
 }
 
-func (app *application) AllMovies(w http.ResponseWriter, r *http.Request){
+func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 	movies, err := app.DB.AllMovies()
 	if err != nil {
-		fmt.Println("All Movies", err)
+		app.errorJSON(w, err)
 		return
 	}
 
