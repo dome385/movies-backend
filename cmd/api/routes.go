@@ -14,9 +14,11 @@ func (app *application) routes() http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(app.enableCORS)
 
-	mux.Post("/authenticate", app.authenticate)
-
 	mux.Get("/", app.Home)
+
+	mux.Post("/authenticate", app.authenticate)
+	mux.Get("/refresh", app.refreshToken)
+
 	mux.Get("/movies", app.AllMovies)
 	return mux
 }
