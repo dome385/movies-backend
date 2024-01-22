@@ -150,5 +150,13 @@ func (app *application) logout(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) MovieCatalog(w http.ResponseWriter, r *http.Request) {
+	movies, err := app.DB.AllMovies()
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	//diese helfer funktion ersetzt das untere
+	_ = app.writeJSON(w, http.StatusOK, movies)
 
 }
